@@ -11,6 +11,7 @@
         $_SESSION["Marke"] = $Marke;
         $Verfuegbar = $row["Verfuegbar"];
         $Bild = $row["Bildadresse"];
+        $Auto_ID = $row["Auto_ID"];
         
         $stmt = "SELECT * FROM modelldetails WHERE Modellbezeichnung ='".$Modell."'";
         $result = $pdo->query($stmt);
@@ -121,10 +122,10 @@
                      <center><h2><?php echo "Lease jetzt deinen <b>".$_SESSION["Marke"]." ".$_SESSION["Modell"]."</b>!";?></h2></center>
                      <br>
                          <center>
-                             <form class="leasingform">
+                             <form class="leasingform" method="post">
                                  <label for="datumvon">
                                      Ab:
-                                     <input id="datumvon" class="datuminput" type="date">
+                                     <input id="datumvon" name="datumvon" class="datuminput" type="date">
                                  </label>
                                  <label for="laufzeit">
                                      Laufzeit:
@@ -140,6 +141,50 @@
                                  <br>
                                  <input type="submit" class="btn btn-outline-secondary btn-lg" value="Jetzt leasen!">
                              </form>
+                             <?php
+                                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                                    $datumvon = DateTime::createFromFormat("Y-m-d",$_POST["datumvon"]);
+                                    
+                                    $sql = $pdo->prepare("SELECT * FROM user WHERE User_Name = :user");
+                                    $sql->bindParam(":user", $_SESSION['username']);
+                                    $res = $sql->execute();
+                                    $row = $sql->fetch(PDO::FETCH_ASSOC);
+                                    
+                                    $kundenid = $row["User_ID"];
+                                    
+                                    $laufzeit = $_POST["laufzeit"]." Monate";
+                                    
+                                    $datumbis = $datumvon;
+                                    $datumbis->add(new DateInterval("P".$_POST["laufzeit"]."M"));
+                                    $datumbisstr = $datumbis->format("Y-m-d");
+                                    
+                                    $sql = $pdo->prepare("
+                                    INSERT INTO Auftraege (Auto_ID, Kunden_ID, Buchungsdatum, Laufzeit, Abgabedatum)
+                                    VALUES(:autoid, :kundenid, :datumvon, :laufzeit, :datumbis) 
+                                    ");
+                                    //(:autoid, :kundenid :datumvon, :laufzeit, :datumbis)
+                                    $sql->bindParam(":autoid", $Auto_ID);
+                                    $sql->bindParam(":kundenid", $kundenid);
+                                    $sql->bindParam(":datumvon", $_POST["datumvon"]);
+                                    $sql->bindParam(":laufzeit", $laufzeit);
+                                    $sql->bindParam(":datumbis", $datumbisstr);
+                                    //$sql->bindParam($Auto_ID, $kundenid, $_POST["datumvon"], $laufzeit, $datumbisstr);
+                                    echo $Auto_ID."<br>";
+                                    echo $kundenid."<br>";
+                                    echo $_POST["datumvon"]."<br>";
+                                    echo $laufzeit."<br>";
+                                    echo $datumbisstr;
+                                    if($sql->execute())
+                                    {
+                                        echo "yay";
+                                    }
+                                    else
+                                    {
+                                        echo "nay";
+                                    }
+                                    
+                                }
+                             ?>
                          </center>
                 </div>
             </div>

@@ -1,4 +1,6 @@
 <?php
+require("Login\dbLogin.php");
+
 $dbhost = "localhost";
 $dbname = "autoleasing1";
 $dbuser = "root";
@@ -11,12 +13,11 @@ try{
 }catch (PDOException $e) {
     echo 'Verbindung fehlgeschlagen: ' . $e->getMessage();
 }
-$sql="CREATE DATABASE IF NOT EXISTS Autoleasing1;";
+$sql="CREATE DATABASE IF NOT EXISTS autoleasing1;";
 $res=$pdo->query($sql);
 
 $sql= "USE autoleasing1;";
 $res=$pdo->query($sql);
-//echo var_dump($res);
 
 //////////////// Table Modelldetails /////////////////
 
@@ -37,13 +38,14 @@ $sql = "
     );";
 $res = $pdo->query($sql);
 
+//////////////// Table Fahrzeuge /////////////////
 
-$sql= "DROP TABLE IF EXISTS fahrzeuge;";
+$sql= "DROP TABLE IF EXISTS Fahrzeuge;";
 $res=$pdo->query($sql);
 
 $sql = "
     CREATE TABLE Fahrzeuge (
-    Auto_ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    Auto_ID INT ( 20 ) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     Automarke VARCHAR( 30 ) NOT NULL ,
     Modellbezeichnung VARCHAR( 20 ) NOT NULL ,
     Verfuegbar VARCHAR( 5 )NOT NULL,
@@ -52,6 +54,25 @@ $sql = "
     );";
 $res = $pdo->query($sql);
 
+//////////////// Table Aufträge /////////////////
+$sql= "DROP TABLE IF EXISTS Auftraege;";
+$res=$pdo->query($sql);
+
+$sql = "
+    CREATE TABLE Auftraege (
+    Auftrag_ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    Auto_ID INT ( 20 ) NOT NULL,
+    Kunden_ID INT NOT NULL,
+    Buchungsdatum DATE NOT NULL,
+    Laufzeit VARCHAR ( 20 ) NOT NULL,
+    Abgabedatum DATE NOT NULL,
+    CONSTRAINT FK_Auftraege_Fahrzeuge FOREIGN KEY (Auto_ID) REFERENCES Fahrzeuge (Auto_ID),
+    CONSTRAINT FK_Auftraege_User FOREIGN KEY (Kunden_ID) REFERENCES User (User_ID)
+    );";
+$res = $pdo->query($sql);
+
+
+//Tabelle Fahrzeuge befüllen
 $sql = "
   INSERT IGNORE INTO `Fahrzeuge`
   ( 
@@ -73,7 +94,6 @@ $sql = "
   '2' , 'Audi', 'A3', 'Ja', 'AutoBilder/audi-a3-weiß.png'
   );";
 $res = $pdo->query($sql);
-
 
 
 $sql = "
@@ -166,6 +186,8 @@ $sql = "
   );";
 $res = $pdo->query($sql);
 
+
+//Tabelle Modelldetails befüllen
 
 $sql = "
   INSERT IGNORE INTO `Modelldetails`
@@ -287,4 +309,17 @@ $sql = "
   'C63' , '11' , 'Benzin', '375kW(510PS)', 'Coupe', 'Automatik' , '2/3' , 'Weiss' , '850.00'
   );";
 $res = $pdo->query($sql); 
+
+
+//Tabelle Auftraege zum Test befüllen
+$sql = "
+  INSERT IGNORE INTO `auftraege`
+  ( 
+  `Auftrag_ID` , `Auto_ID` , `Kunden_ID` , `Buchungsdatum`,`Laufzeit`,`Abgabedatum`
+  ) 
+  VALUES
+  (
+  '1' , '1', '1', '01.01.2020', '12 Monate' , '01.01.2021'
+  );";
+$res = $pdo->query($sql);
 ?>

@@ -57,7 +57,7 @@ if (isset($_POST["submit"])) {
         <input type="submit" name="submit" value="Login">
         <text name="infotext">Du hast noch keinen Account? <a href="Register.php">Registrier dich.</a></text>
         <br><br>
-        <text name="infotext"><a href="index.php">Zurück zur Startseite</a></text>
+        <text name="infotext"><a href="../index.php">Zurück zur Startseite</a></text>
     </form>
 
 </body>

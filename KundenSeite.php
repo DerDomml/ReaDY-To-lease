@@ -1,10 +1,12 @@
 <?php
-session_start();
-include_once('dbFahrzeuge.php');
-if(isset($_SESSION["username"]))
-{
-    header("Location: KundenSeite.php");
-}
+    require("dbFahrzeuge.php");
+    session_start();
+    if(isset($_SESSION["username"])){
+        $loggedin = true;
+    }
+    else{
+        header("Location: index.php");
+    }
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +14,7 @@ if(isset($_SESSION["username"]))
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>RDYTo Lease</title>
+        <title>PogU</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -44,19 +46,18 @@ if(isset($_SESSION["username"]))
                         <li class="nav-item">
                             <a class="nav-link" href="Maps.php">Location</a>
                         </li>
-
-                        <li class="nav-item">
+<!--                        <li class="nav-item">
                             <a class="nav-link" href="Login/Login.php">Login</a>
-                        </li>
+                        </li>-->
                         <li class="nav-item">
-                            <a class="nav-link" href="Login/Register.php">Registrieren</a>
+                            <a class="nav-link" href="Login/Logout.php">Abmelden</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
 
-        <!--- Image Slider -->
+         <!--- Image Slider -->
         <div id="slides"  class="carousel slide" data-ride="carousel">
             <ul class="carousel-indicators">
                 <li data-target="#slides" data-slide-to="0" class="active"></li>

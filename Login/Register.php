@@ -1,11 +1,5 @@
 <?php
 
-session_start();
-if(isset($_SESSION['username']))
-{
-    header("Location: ../KundenSeite.php");
-}
-
 if (isset($_POST["submit"])) {
     require("dbLogin.php");
     $sql = $pdo->prepare("SELECT * FROM user WHERE User_Name = :user ");
@@ -29,10 +23,12 @@ if (isset($_POST["submit"])) {
                 echo "<center><p style='color:#2ecc71;'>Der Account " . $_POST["uname"] . " wurde erstellt!</p></center>";
             }
             else{
+                //Passwörter stimmen nicht überein
                 echo "<center><p style='color:#ff4133;'>Passwörter stimmen nicht überein!</p></center>";
             }
         }
         else{
+            //Nicht alle Felder ausgefüllt
             echo "<center><p style='color:#ff4133;'>Bitte fülle alle Felder aus!</p></center>";
         }
     }
@@ -74,6 +70,8 @@ if (isset($_POST["submit"])) {
         <input type="password" name="psw2" placeholder="Passwort wiederholen">
         <input type="submit" name="submit" value="Registrieren">
         <text name="infotext">Du hast bereits einen Account? <a href="Login.php">Logg dich ein.</a></text>
+        <br><br>
+        <text name="infotext"><a href="index.php">Zurück zur Startseite</a></text>
     </form>
 
 </body>

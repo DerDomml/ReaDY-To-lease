@@ -8,6 +8,7 @@
         $result = $pdo->query($stmt);
         $row = $result->fetch(PDO::FETCH_ASSOC);
         $Marke = $row["Automarke"];
+        $_SESSION["Marke"] = $Marke;
         $Verfuegbar = $row["Verfuegbar"];
         $Bild = $row["Bildadresse"];
         
@@ -41,44 +42,9 @@
     </head>
     <body>
         <!-- Navigation -->
-        <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
-            <div class="container-fluid">
-                <a class="navbar-brand" href ='index.php'><img src="RDYtoLeaseLogo/Logo2.png"/></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-                    <span class="navbar-toggler-icon">
-
-                    </span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="index.php">Home</a>
-                        </li>
-                        <li class="nav-item">
-
-                            <a class="nav-link" href="#Team">Team</a>
-                        </li>
-                        <li class="nav-item">
-
-                            <a class="nav-link" href="Maps.php">Location</a>
-                        </li>
-                        <li class="nav-item">
-
-                            <a class="nav-link" href="#Service">Services</a>
-                        </li>
-                        <li class="nav-item">
-
-                            <a class="nav-link" href="Login/Login.php">Login</a>
-                        </li>
-                        <li class="nav-item">
-
-                            <a class="nav-link" href="Login/Register.php">Registrieren</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
+        <?php 
+            require("navbar.php");
+        ?>
         <!--- Two Column Section -->
 
         <div class="container-fluid padding">
@@ -149,15 +115,32 @@
                         </tr>
                     </table>
                     <br>
-                    <?php
-                        if(isset($_SESSION["username"]))
-                        {
-                            echo '
-                            <center>
-                                <a href="#"><button type="button" class="btn btn-outline-secondary btn-lg">Jetzt Leasen</button></a>
-                            </center> ';
-                        }
-                    ?>
+                    
+                      <!-- Leasing Eingabeform -->
+                     
+                     <center><h2><?php echo "Lease jetzt deinen <b>".$_SESSION["Marke"]." ".$_SESSION["Modell"]."</b>!";?></h2></center>
+                     <br>
+                         <center>
+                             <form class="leasingform">
+                                 <label for="datumvon">
+                                     Ab:
+                                     <input id="datumvon" class="datuminput" type="date">
+                                 </label>
+                                 <label for="laufzeit">
+                                     Laufzeit:
+                                     <select name="laufzeit">
+                                         <option value="12">12</option>
+                                         <option value="24">24</option>
+                                         <option value="36">36</option>
+                                         <option value="48">48</option>
+                                     </select>
+                                     Monate
+                                 </label>
+                                 <br>
+                                 <br>
+                                 <input type="submit" class="btn btn-outline-secondary btn-lg" value="Jetzt leasen!">
+                             </form>
+                         </center>
                 </div>
             </div>
         </div>

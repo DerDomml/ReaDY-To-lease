@@ -2,7 +2,7 @@
 session_start();
 if(isset($_SESSION['username']))
 {
-    header("Location: ../KundenSeite.php");
+    header("Location: ../index.php");
 }
 
 if (isset($_POST["submit"])) {
@@ -19,7 +19,7 @@ if (isset($_POST["submit"])) {
             $_SESSION["username"] = $row["User_Name"];
             //User ist eingeloggt
             echo "<center><p style='color:#2ecc71;'>Hallo, " . $row['User_Name'] . "! Du wurdest erfolgreich eingeloggt!</p></center>";
-            header("Location: ../KundenSeite.php");
+            header("Location: ../index.php");
         }
         else{
             //Passwort falsch
@@ -55,7 +55,9 @@ if (isset($_POST["submit"])) {
         <input type="text" name="uname" placeholder="Username">
         <input type="password" name="psw" placeholder="Password">
         <input type="submit" name="submit" value="Login">
-        <text>Du hast noch keinen Account? <a href="Register.php">Registrier dich.</a></text>
+        <text name="infotext">Du hast noch keinen Account? <a href="Register.php">Registrier dich.</a></text>
+        <br><br>
+        <text name="infotext"><a href="index.php">Zurück zur Startseite</a></text>
     </form>
 
 </body>

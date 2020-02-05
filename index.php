@@ -222,6 +222,16 @@ session_start();
                         </div>
                     </div>
                 </div> 
+                
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="RDYtoLeaseLogo/domi2.jpg">
+                        <div class="card-body">
+                            <h4 class="card-title">Dominik Wagner</h4>
+                            <p class="card-text">Merge und Repolish-Master, Logikgenie, Projektretter</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <hr class="my-4">
         </div>

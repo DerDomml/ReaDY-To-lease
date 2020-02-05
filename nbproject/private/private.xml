@@ -3,10 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/RDYT/KundenSeite.php</file>
-            <file>file:/C:/xampp/htdocs/RDYT/Login/Login.php</file>
-            <file>file:/C:/xampp/htdocs/RDYT/Login/mySql.php</file>
-            <file>file:/C:/xampp/htdocs/RDYT/index.php</file>
+            <file>file:/C:/php/workspace/htdocs/RDYT/Maps.php</file>
+            <file>file:/C:/php/workspace/htdocs/RDYT/KundenSeite.php</file>
+            <file>file:/C:/php/workspace/htdocs/RDYT/FahrzeugSuche.php</file>
+            <file>file:/C:/php/workspace/htdocs/RDYT/Login/dbLogin.php</file>
+            <file>file:/C:/php/workspace/htdocs/RDYT/Login/Register.php</file>
+            <file>file:/C:/php/workspace/htdocs/RDYT/index.php</file>
+            <file>file:/C:/php/workspace/htdocs/RDYT/dbFahrzeuge.php</file>
+            <file>file:/C:/php/workspace/htdocs/RDYT/Login/Login.php</file>
+            <file>file:/C:/php/workspace/htdocs/RDYT/navbar.php</file>
         </group>
     </open-files>
 </project-private>

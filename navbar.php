@@ -23,9 +23,6 @@
                   <a class="nav-link" href="index.php">Home</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="#Team">Team</a>
-              </li>
-              <li class="nav-item">
                   <a class="nav-link" href="#Service">Services</a>
               </li>
               <li class="nav-item">

@@ -1,6 +1,14 @@
 <?php
-include_once('dbFahrzeuge.php');
-session_start();
+    session_start();
+if(isset($_SESSION["username"]))
+{
+    echo "<center><p style='color:#2ecc71;'>Hallo, " . $_SESSION['username'] . "! Du wurdest erfolgreich eingeloggt!</p></center>";
+}
+else{
+    echo "<center><p style='color:red;'>Bitte logge dich zuerst ein!</p></center>";
+    header("Location: index.php");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +16,7 @@ session_start();
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>RDYToLease</title>
+        <title>PogU</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -18,9 +26,38 @@ session_start();
     </head>
     <body>
         <!-- Navigation -->
-        <?php
-        require("navbar.php");
-        ?>
+        <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href ='index.php'><img src="RDYtoLeaseLogo/Logo2.png"/></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                    <span class="navbar-toggler-icon">
+
+                    </span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="index.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#Team">Team</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#Service">Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Maps.php">Location</a>
+                        </li>
+<!--                        <li class="nav-item">
+                            <a class="nav-link" href="Login/Login.php">Login</a>
+                        </li>-->
+                        <li class="nav-item">
+                            <a class="nav-link" href="Login/Logout.php">Abmelden</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
         <!--- Image Slider -->
         <div id="slides"  class="carousel slide" data-ride="carousel">
@@ -72,6 +109,7 @@ session_start();
                     </p>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
+                    <!--<a href="http://www.instagram.com/mcm4rco" target="_blank"> <button type="button" class="btn btn-outline-secondary btn-lg">Folgt meine Ahki</button> </a>-->
                 </div>
             </div>
         </div>
@@ -84,75 +122,16 @@ session_start();
 
                     <div class="col-12">
                         <hr class="my-4">
-
                         <h1>Wählen sie Ihr Fahrzeug aus</h1>
-
-                        <?php
-                        $sql = "select distinct Automarke from Fahrzeuge ORDER BY Automarke ";
-
-                        try {
-                            $stmt = $pdo->prepare($sql);
-                            $stmt->execute();
-                            $results = $stmt->fetchAll();
-                        } catch (Exception $ex) {
-                            echo ($ex->getMessage());
-                        }
-
-                        $Automarke_dropdown = "";
-                        $Modellbezeichnung_dropdown = "";
-
-                        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                            $Automarke_dropdown = $_POST["Automarke_dropdown"];
-                            $Modellbezeichnung_dropdown = $_POST["Modellbezeichnung_dropdown"];
-                        } else {
-                            
-                        }
-                        ?>                
-                        <form method="post" action="">
-
-                            <select class="btn btn-secondary btn-lg" name="Automarke_dropdown" onchange='this.form.submit()'>
-                                <option>Automarke wählen</option>
-                                <?php foreach ($results as $output) { ?>
-                                    <option <?php echo ($output["Automarke"] == $Automarke_dropdown) ? "selected" : ""; ?>><?php echo $output["Automarke"]; ?></option>
-                                <?php } ?>
-                            </select>
-
-
-                            <?php
-                            //////////////check Automarke//////////////////
-                            $sql = "select distinct Modellbezeichnung from Fahrzeuge where Automarke = '" . $Automarke_dropdown . "' ORDER BY
-             Modellbezeichnung;";
-                            try {
-                                $stmt = $pdo->prepare($sql);
-                                $stmt->execute();
-                                $results = $stmt->fetchAll();
-                            } catch (Exception $ex) {
-                                echo ($ex->getMessage());
-                            }
-                            ?>
-                            <select class="btn btn-secondary btn-lg" name="Modellbezeichnung_dropdown" onchange='this.form.submit()'>
-                                <option>Fahrzeugmodell wählen</option>
-                                <?php
-                                if ($stmt->rowCount() > 0) {
-                                    foreach ($results as $output) {
-                                        ?>
-                                        <option <?php echo ($output["Modellbezeichnung"] == $Modellbezeichnung_dropdown) ? "selected" : ""; ?>><?php echo $output["Modellbezeichnung"]; ?></option>
-                                    <?php }
-                                } ?>
-                            </select>
-                        </form>
-                        <br>
-                        <?php
-                        if ($Modellbezeichnung_dropdown != "" && $Modellbezeichnung_dropdown != "Fahrzeugmodell wählen") {
-
-                            $_SESSION["Modell"] = $Modellbezeichnung_dropdown;
-                            echo '<a class="btn btn-secondary btn-lg" href="Seite2.php" target="_blank">' . $Modellbezeichnung_dropdown . ' anzeigen</a>';
-                        } else {
-                            $_SESSION["Modell"] = "";
-                            echo '<a class="btn btn-secondary btn-lg" href="index.php#Modellauswahl">Bitte Modell wählen!</a>';
-                        }
-                        ?>
-
+                        <select name="Automarke_dropdown"  class="btn btn-secondary btn-lg" onchange='this.form.submit()'>
+                            <option value="BMW">BMW</option>
+                            <option value="Audi">Audi</option>
+                            <option value="Volkswagen">Volkswagen</option>
+                        </select>
+                        <select type="button" class="btn btn-secondary btn-lg">
+                            auswahl 2
+                        </select>
+                        <input class="btn btn-secondary btn-lg"  type="submit" name="" value="Suche">
                         <br>
                     </div>
                 </div>
@@ -197,7 +176,7 @@ session_start();
                         <img class="card-img-top" src="RDYtoLeaseLogo/relaxo2.png">
                         <div class="card-body">
                             <h4 class="card-title">Younes Abou Kharoub</h4>
-                            <p class="card-text">Web-Design Challenger und Profi im Bootstrap-Business</p>
+                            <p class="card-text">Zuständig für das Web-Design und Profi im Bootstrap-Business</p>
                         </div>
                     </div>
                 </div>
@@ -207,7 +186,7 @@ session_start();
                         <img class="card-img-top" src="RDYtoLeaseLogo/Tim2.png">
                         <div class="card-body">
                             <h4 class="card-title">Lim Tindner</h4>
-                            <p class="card-text">Datenbanken-G</p>
+                            <p class="card-text">Datenbanken-G, MonsterHunter-Experte, PogU</p>
                         </div>
                     </div>
                 </div>
@@ -218,10 +197,32 @@ session_start();
                         <img class="card-img-top" src="RDYtoLeaseLogo/richi2.jpg">
                         <div class="card-body">
                             <h4 class="card-title">Lichard Reitschuh</h4>
-                            <p class="card-text">Login-Gott, Registrierungsmeister</p>
+                            <p class="card-text">Login-Gott, Registrierungsmeister, zockt nebenbei gefühlt 7 Stunden</p>
                         </div>
                     </div>
                 </div> 
+            </div>
+            <hr class="my-4">
+        </div>
+
+        <!--- Three Column Section -->
+        <div class="container-fluid padding">
+            <div class="row text-center padding">
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <i class="fas fa-code"></i>
+                    <h3>HTML5</h3>
+                    <p>Built with the lastest version of HTML, HTML5</p>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <i class="fas fa-bold"></i>
+                    <h3>BOOTSTRAP</h3>
+                    <p>Built with the lastest version of Bootstrap, Bootstrap4</p>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <i class="fab fa-css3"></i>
+                    <h3>CSS</h3>
+                    <p>Built with the lastest version of CSS, CSS3</p>
+                </div>
             </div>
             <hr class="my-4">
         </div>
@@ -253,9 +254,9 @@ session_start();
                             <img src="RDYtoLeaseLogo/Logo2-schwarzweiß.png">
                             <hr class="light">
                             <p>✆ 555-555-5555</p>
-                            <p>✉ max.mustermann@pogu.com</p>
-                            <p>Mustermannstraße 42</p>
-                            <p>Bayern, MusterIsland, 69420</p>
+                            <p>✉ mirko.maulwurf@siemens.com</p>
+                            <p>Mirkostraße 42</p>
+                            <p>Bayern, MirkoIsland ,69420</p>
                         </div>
 
                         <div class="col-md-4">
@@ -280,7 +281,7 @@ session_start();
 
                         <div class="col-12">
                             <hr class="light-100">  
-                            <a href="#" target="_blank" <h5>&copy;RDYToLease</h5></a>
+                            <a href="http://www.instagram.com/mcm4rco" target="_blank" <h5>&copy; http://www.instagram.com/mcm4rco</h5></a>
                         </div>
                     </div>
             </section>

@@ -55,8 +55,8 @@ $sql = "
 $res = $pdo->query($sql);
 
 //////////////// Table Aufträge /////////////////
-$sql= "DROP TABLE IF EXISTS Auftraege;";
-$res=$pdo->query($sql);
+//$sql= "DROP TABLE IF EXISTS Auftraege;";
+//$res=$pdo->query($sql);
 
 $sql = "
     CREATE TABLE Auftraege (

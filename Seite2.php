@@ -1,27 +1,26 @@
 <?php
-    require("dbFahrzeuge.php");
-    session_start();
-    if(isset($_SESSION["Modell"]))
-    {
-        $Modell = $_SESSION["Modell"];
-        $stmt = "SELECT * FROM fahrzeuge WHERE Modellbezeichnung='".$Modell."'";
-        $result = $pdo->query($stmt);
-        $row = $result->fetch(PDO::FETCH_ASSOC);
-        $Marke = $row["Automarke"];
-        $_SESSION["Marke"] = $Marke;
-        $Verfuegbar = $row["Verfuegbar"];
-        $Bild = $row["Bildadresse"];
-        $Auto_ID = $row["Auto_ID"];
-        
-        $stmt = "SELECT * FROM modelldetails WHERE Modellbezeichnung ='".$Modell."'";
-        $result = $pdo->query($stmt);
-        $row = $result->fetch(PDO::FETCH_ASSOC);
-        $Kraftstoff = $row["Kraftstoff"];
-        $Leistung = $row["Leistung"];
-        $Typ = $row["Fahrzeugtyp"];
-        $Getriebe = $row["Getriebe"];
-        $Farbe = $row["Farbe"];
-    }
+require("dbFahrzeuge.php");
+session_start();
+if (isset($_SESSION["Modell"])) {
+    $Modell = $_SESSION["Modell"];
+    $stmt = "SELECT * FROM fahrzeuge WHERE Modellbezeichnung='" . $Modell . "'";
+    $result = $pdo->query($stmt);
+    $row = $result->fetch(PDO::FETCH_ASSOC);
+    $Marke = $row["Automarke"];
+    $_SESSION["Marke"] = $Marke;
+    $Verfuegbar = $row["Verfuegbar"];
+    $Bild = $row["Bildadresse"];
+    $Auto_ID = $row["Auto_ID"];
+
+    $stmt = "SELECT * FROM modelldetails WHERE Modellbezeichnung ='" . $Modell . "'";
+    $result = $pdo->query($stmt);
+    $row = $result->fetch(PDO::FETCH_ASSOC);
+    $Kraftstoff = $row["Kraftstoff"];
+    $Leistung = $row["Leistung"];
+    $Typ = $row["Fahrzeugtyp"];
+    $Getriebe = $row["Getriebe"];
+    $Farbe = $row["Farbe"];
+}
 ?>
 
 <!DOCTYPE html>
@@ -38,39 +37,38 @@
         <link href="css/style.css?x=2" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
-        
-        
+
+
     </head>
     <body>
         <!-- Navigation -->
-        <?php 
-            require("navbar.php");
+        <?php
+        require("navbar.php");
         ?>
         <!--- Two Column Section -->
 
         <div class="container-fluid padding">
-                <center><div class="col-12">
-                    <?php echo '<img class="Autobilder" src="'.$Bild.'">'?>
+            <center><div class="col-12">
+                    <?php echo '<img class="Autobilder" src="' . $Bild . '">' ?>
                     <br>
-                    </div></center>
+                </div></center>
             <div class="row padding text-left">
                 <div class="col-12">
                     <h2 class="text-center" id="Modell">
-                        <?php echo $Marke." ".$Modell?>
+                        <?php echo $Marke . " " . $Modell ?>
                     </h2>
                     <hr class="my-4">
                     <table class="paddingBetweenCols" class="paddingBetweenRows">
                         <tr class="spaceUnder">
                             <td>Bereitstellungszeit:</td>
                             <td id="Verfuegbarkeit">
-                            <?php
-                                if($Verfuegbar == "Ja"){
+                                <?php
+                                if ($Verfuegbar == "Ja") {
                                     echo "Sofort verfügbar!";
-                                }
-                                else{
+                                } else {
                                     echo "Momentan leider nicht verfügbar.";
                                 }
-                            ?>
+                                ?>
                             </td>
                         </tr>
                         <br>
@@ -78,7 +76,7 @@
                             <td>Kraftstoff:</td>
                             <td id="Kraftstoff">
                                 <?php
-                                    echo $Kraftstoff;
+                                echo $Kraftstoff;
                                 ?>
                             </td>
                         </tr>
@@ -86,7 +84,7 @@
                             <td>Leistung:</td>
                             <td id="Leistung">
                                 <?php
-                                    echo $Leistung;
+                                echo $Leistung;
                                 ?>
                             </td>
                         </tr>
@@ -94,7 +92,7 @@
                             <td>Getriebe:</td>
                             <td id="Getriebe">
                                 <?php
-                                    echo $Getriebe;
+                                echo $Getriebe;
                                 ?>
                             </td>
                         </tr>
@@ -102,7 +100,7 @@
                             <td>Fahrzeugaufbau:</td>
                             <td id="Fahrzeugart">
                                 <?php
-                                    echo $Typ;
+                                echo $Typ;
                                 ?>
                             </td>
                         </tr>
@@ -110,82 +108,78 @@
                             <td>Farbe:</td>
                             <td id="Farbe">
                                 <?php
-                                    echo $Farbe;
+                                echo $Farbe;
                                 ?>
                             </td>
                         </tr>
                     </table>
                     <br>
-                    
-                      <!-- Leasing Eingabeform -->
-                     
-                     <center><h2><?php echo "Lease jetzt deinen <b>".$_SESSION["Marke"]." ".$_SESSION["Modell"]."</b>!";?></h2></center>
-                     <br>
-                         <center>
-                             <form class="leasingform" method="post">
-                                 <label for="datumvon">
-                                     Ab:
-                                     <input id="datumvon" name="datumvon" class="datuminput" type="date">
-                                 </label>
-                                 <label for="laufzeit">
-                                     Laufzeit:
-                                     <select name="laufzeit">
-                                         <option value="12">12</option>
-                                         <option value="24">24</option>
-                                         <option value="36">36</option>
-                                         <option value="48">48</option>
-                                     </select>
-                                     Monate
-                                 </label>
-                                 <br>
-                                 <br>
-                                 <input type="submit" class="btn btn-outline-secondary btn-lg" value="Jetzt leasen!">
-                             </form>
-                             <?php
-                                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                                    $datumvon = DateTime::createFromFormat("Y-m-d",$_POST["datumvon"]);
-                                    
-                                    $sql = $pdo->prepare("SELECT * FROM user WHERE User_Name = :user");
-                                    $sql->bindParam(":user", $_SESSION['username']);
-                                    $res = $sql->execute();
-                                    $row = $sql->fetch(PDO::FETCH_ASSOC);
-                                    
-                                    $kundenid = $row["User_ID"];
-                                    
-                                    $laufzeit = $_POST["laufzeit"]." Monate";
-                                    
-                                    $datumbis = $datumvon;
-                                    $datumbis->add(new DateInterval("P".$_POST["laufzeit"]."M"));
-                                    $datumbisstr = $datumbis->format("Y-m-d");
-                                    
-                                    $sql = $pdo->prepare("
+
+                    <!-- Leasing Eingabeform -->
+
+                    <center><h2><?php echo "Lease jetzt deinen <b>" . $_SESSION["Marke"] . " " . $_SESSION["Modell"] . "</b>!"; ?></h2></center>
+                    <br>
+                    <center>
+                        <form class="leasingform" method="post">
+                            <label for="datumvon">
+                                Ab:
+                                <input id="datumvon" name="datumvon" class="datuminput" type="date">
+                            </label>
+                            <label for="laufzeit">
+                                Laufzeit:
+                                <select name="laufzeit">
+                                    <option value="12">12</option>
+                                    <option value="24">24</option>
+                                    <option value="36">36</option>
+                                    <option value="48">48</option>
+                                </select>
+                                Monate
+                            </label>
+                            <br>
+                            <br>
+                            <input type="submit" class="btn btn-outline-secondary btn-lg" value="Jetzt leasen!">
+                        </form>
+                        <?php
+                        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                            $datumvon = DateTime::createFromFormat("Y-m-d", $_POST["datumvon"]);
+
+                            $sql = $pdo->prepare("SELECT * FROM user WHERE User_Name = :user");
+                            $sql->bindParam(":user", $_SESSION['username']);
+                            $res = $sql->execute();
+                            $row = $sql->fetch(PDO::FETCH_ASSOC);
+
+                            $kundenid = $row["User_ID"];
+
+                            $laufzeit = $_POST["laufzeit"] . " Monate";
+
+                            $datumbis = $datumvon;
+                            $datumbis->add(new DateInterval("P" . $_POST["laufzeit"] . "M"));
+                            $datumbisstr = $datumbis->format("Y-m-d");
+
+                            $sql = $pdo->prepare("
                                     INSERT INTO Auftraege (Auto_ID, Kunden_ID, Buchungsdatum, Laufzeit, Abgabedatum)
                                     VALUES(:autoid, :kundenid, :datumvon, :laufzeit, :datumbis) 
                                     ");
-                                    //(:autoid, :kundenid :datumvon, :laufzeit, :datumbis)
-                                    $sql->bindParam(":autoid", $Auto_ID);
-                                    $sql->bindParam(":kundenid", $kundenid);
-                                    $sql->bindParam(":datumvon", $_POST["datumvon"]);
-                                    $sql->bindParam(":laufzeit", $laufzeit);
-                                    $sql->bindParam(":datumbis", $datumbisstr);
-                                    //$sql->bindParam($Auto_ID, $kundenid, $_POST["datumvon"], $laufzeit, $datumbisstr);
-                                    echo $Auto_ID."<br>";
-                                    echo $kundenid."<br>";
-                                    echo $_POST["datumvon"]."<br>";
-                                    echo $laufzeit."<br>";
-                                    echo $datumbisstr;
-                                    if($sql->execute())
-                                    {
-                                        echo "yay";
-                                    }
-                                    else
-                                    {
-                                        echo "nay";
-                                    }
-                                    
-                                }
-                             ?>
-                         </center>
+                            //(:autoid, :kundenid :datumvon, :laufzeit, :datumbis)
+                            $sql->bindParam(":autoid", $Auto_ID);
+                            $sql->bindParam(":kundenid", $kundenid);
+                            $sql->bindParam(":datumvon", $_POST["datumvon"]);
+                            $sql->bindParam(":laufzeit", $laufzeit);
+                            $sql->bindParam(":datumbis", $datumbisstr);
+                            //$sql->bindParam($Auto_ID, $kundenid, $_POST["datumvon"], $laufzeit, $datumbisstr);
+//                            echo $Auto_ID . "<br>";
+//                            echo $kundenid . "<br>";
+//                            echo $_POST["datumvon"] . "<br>";
+//                            echo $laufzeit . "<br>";
+//                            echo $datumbisstr;
+                            if ($sql->execute()) {
+                                echo "Ihr Auftrag wurde angenommen!";
+                            } else {
+                                echo "Der Auftrag konnte nicht angenommen werden. Bitte anmelden";
+                            }
+                        }
+                        ?>
+                    </center>
                 </div>
             </div>
         </div>
@@ -195,7 +189,7 @@
         <div class="container-fluid padding">
             <div class="row text-center padding">
                 <div class="col-12">
-                    <h2>Conntect</h2>
+                    <h2>Connect</h2>
                 </div>
                 <div class="col-12 social padding">
                     <a href="#"><i class="fab fa-instagram"></i></a>
@@ -213,42 +207,44 @@
     <!--- Footer -->
 
     <footer>
-        <div class="container-fluid padding">
-            <div class="row text-center">
+        <section id="Service">
+            <div class="container-fluid padding">
+                <div class="row text-center">
 
-                <div class="col-md-4">
-                    <img src="RDYtoLeaseLogo/Logo2-schwarzweiß.png">
-                    <hr class="light">
-                    <p>✆ 555-555-5555</p>
-                    <p>✉ mirko.maulwurf@siemens.com</p>
-                    <p>Mirkostraße 42</p>
-                    <p>Bayern, MirkoIsland ,69420</p>
+                    <div class="col-md-4">
+                        <img src="RDYtoLeaseLogo/Logo2-schwarzweiß.png">
+                        <hr class="light">
+                        <p>✆ 555-555-5555</p>
+                        <p>✉ max.mustermann@pogu.com</p>
+                        <p>Mustermannstraße 42</p>
+                        <p>Bayern, MusterIsland, 69420</p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <hr class="light">
+                        <h5>Öffnungszeiten</h5>
+                        <hr class="light">
+                        <p>Montag-Freitag: 8-18Uhr</p>
+                        <p>Samstag: 8-14Uhr</p>
+                        <p>Sonntag: geschlossen </p>
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <hr class="light">
+                        <h5>Service Area</h5>
+                        <hr class="light">
+                        <p>Erlangen, Bayern, 91056</p>
+                        <p>Fürth, Bayern, 90762</p>
+                        <p>Nürnberg, Bayern, 90402</p>
+                        <p>Buxtehude, Niedersachsen, 21614</p>
+                    </div>
+
+                    <div class="col-12">
+                        <hr class="light-100">  
+                        <a href="#" target="_blank" <h5>&copy;RDYToLease</h5></a>
+                    </div>
                 </div>
-
-                <div class="col-md-4">
-                    <hr class="light">
-                    <h5>Öffnungszeiten</h5>
-                    <hr class="light">
-                    <p>Montag-Freitag: 8-18Uhr</p>
-                    <p>Samstag: 8-14Uhr</p>
-                    <p>Sonntag: geschlossen </p>
-                </div>
-
-
-                <div class="col-md-4">
-                    <hr class="light">
-                    <h5>Service Area</h5>
-                    <hr class="light">
-                    <p>Erlangen, Bayern, 91056</p>
-                    <p>Fürth, Bayern, 90762</p>
-                    <p>Nürnberg, Bayern, 90402</p>
-                    <p>Buxtehude, Niedersachsen, 21614</p>
-                </div>
-
-                <div class="col-12">
-                    <hr class="light-100">  
-                    <h5>&copy; http://www.instagram.com/mcm4rco</h5>
-                </div>
-            </div>
+        </section>
     </footer>
 </html>

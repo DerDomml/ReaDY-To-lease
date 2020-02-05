@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>PogU</title>
+        <title>Fuhrpark</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -13,9 +13,9 @@
     </head>
     <body>
         <!-- Navigation -->
-       <?php
-            session_start();
-            require("navbar.php");
+        <?php
+        session_start();
+        require("navbar.php");
         ?>
 
         <!--- Meet the team -->
@@ -167,9 +167,9 @@
                             <img src="RDYtoLeaseLogo/Logo2-schwarzweiß.png">
                             <hr class="light">
                             <p>✆ 555-555-5555</p>
-                            <p>✉ mirko.maulwurf@siemens.com</p>
-                            <p>Mirkostraße 42</p>
-                            <p>Bayern, MirkoIsland ,69420</p>
+                            <p>✉ max.mustermann@pogu.com</p>
+                            <p>Mustermannstraße 42</p>
+                            <p>Bayern, MusterIsland, 69420</p>
                         </div>
 
                         <div class="col-md-4">
@@ -194,7 +194,7 @@
 
                         <div class="col-12">
                             <hr class="light-100">  
-                            <a href="http://www.instagram.com/mcm4rco" target="_blank" <h5>&copy; http://www.instagram.com/mcm4rco</h5></a>
+                            <a href="#" target="_blank" <h5>&copy; RDYToLease</h5></a>
                         </div>
                     </div>
             </section>
